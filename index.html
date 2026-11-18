@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>脑腐海湾 Brainrot Bay · 中文版</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+  <header>
+    <h1>🌴 脑腐海湾 <span class="en">Brainrot Bay</span></h1>
+    <p class="subtitle">中文单机体验版 · 在传送带上抢脑腐角色，守住基地，躲过海啸！</p>
+  </header>
+
+  <div id="hud">
+    <div class="stat"><span class="label">💰 现金</span><span id="hud-cash" class="value">$100</span></div>
+    <div class="stat"><span class="label">📈 每秒收入</span><span id="hud-income" class="value">$0/s</span></div>
+    <div class="stat"><span class="label">🧠 我的脑腐</span><span id="hud-owned" class="value">0 / 6</span></div>
+    <div class="stat"><span class="label">🔄 转生</span><span id="hud-rebirth" class="value">0 次 · 收入 ×1</span></div>
+    <div class="stat"><span class="label">🌊 下次海啸</span><span id="hud-wave" class="value">3:00</span></div>
+    <div class="stat"><span class="label">🥷 偷取冷却</span><span id="hud-steal" class="value">就绪</span></div>
+    <div class="hud-buttons">
+      <button id="btn-lock" class="btn lock">🔒 锁定基地 ($500 · 60秒)</button>
+      <button id="btn-rebirth" class="btn rebirth" disabled>🔄 转生 ($25,000)</button>
+      <button id="btn-help" class="btn">📖 玩法说明</button>
+      <button id="btn-mute" class="btn">🔊 音效</button>
+    </div>
+  </div>
+
+  <div id="stage">
+    <canvas id="game" width="960" height="640"></canvas>
+    <div id="toasts"></div>
+    <div id="wave-banner" class="hidden">🌊 <b>海啸警告！</b><span id="wave-count">15</span> 秒后巨浪来袭，快回到自己的基地里！</div>
+
+    <div id="start-screen">
+      <h2>🌴 脑腐海湾</h2>
+      <p class="en-sub">Brainrot Bay · 中文版</p>
+      <p class="rules">
+        传送带上不断走来奇奇怪怪的脑腐角色，<b>点一下就能买回家</b>，它们每秒都给你赚钱。<br>
+        稀有度越高赚得越多，变异角色价格和收入翻倍；<b>点邻居基地的角色可以偷</b>，但他们也会偷你的——<br>
+        花 $500 锁基地 60 秒保平安；攒够钱可以<b>转生</b>，清空一切换永久双倍收入；<br>
+        每 3 分钟一次<b>海啸</b>，警告响起就赶紧回基地，不然会被冲走 10% 现金，传送带也会被洗空！
+      </p>
+      <button id="start-btn" class="btn big">▶ 开始游戏</button>
+      <p class="save-note" id="save-note"></p>
+    </div>
+
+    <div id="help-modal" class="hidden">
+      <div class="help-card">
+        <h2>📖 玩法说明</h2>
+        <h3>怎么玩</h3>
+        <ul>
+          <li><b>购买：</b>点击传送带上的角色，钱够就买进自己的基地（红色，左下角）。角色走出传送带就没了，手快有手慢无。</li>
+          <li><b>赚钱：</b>每个角色每秒按标注的 $/s 给你发钱，稀有度越高越能赚。</li>
+          <li><b>变异：</b>出生时可能带变异——黄金 ×2、钻石 ×5、彩虹 ×10，价格和收入都翻倍。</li>
+          <li><b>偷取：</b>点击邻居基地里的角色可以偷走，偷一次要等 30 秒冷却。邻居也会偷你的，基地被锁时偷不了。</li>
+          <li><b>锁定基地：</b>$500 锁 60 秒，谁也偷不走你的角色。</li>
+          <li><b>转生：</b>攒够 $25,000（之后每次 ×6）可以转生：清空基地和现金，收入永久 ×2，可叠加。</li>
+          <li><b>海啸：</b>每 3 分钟来一次，提前 15 秒警告。警告时赶紧点回自己的基地，巨浪扫过传送带会洗空上面的角色，被冲到的人要丢 10% 现金。</li>
+          <li><b>移动：</b>点击地面走过去，也可以用 WASD / 方向键走路。</li>
+        </ul>
+        <h3>稀有度</h3>
+        <p id="rarity-list"></p>
+        <h3>角色图鉴（12 位）</h3>
+        <div id="catalog-list"></div>
+        <div class="help-actions">
+          <button id="btn-reset" class="btn danger">🗑 清除存档重开</button>
+          <button id="btn-close-help" class="btn big">知道了</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    💡 点击传送带上的角色购买 · 点击邻居基地的角色偷取 · 点击地面移动 · 进度自动保存在本机浏览器
+  </footer>
+</div>
+<script src="game.js"></script>
+</body>
+</html>
